@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delícias da Karen</title>
+  <meta name="description" content="Doces artesanais, cones trufados, brigadeiros gourmet e encomendas especiais da Delícias da Karen." />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --rosa: #ef4b9a;
+      --rosa-escuro: #d93883;
+      --rosa-suave: #fff5fa;
+      --marrom: #5c2d20;
+      --marrom-2: #7b3f2e;
+      --branco: #ffffff;
+      --texto: #4a2c27;
+      --texto-claro: #7d5b57;
+      --borda: rgba(239, 75, 154, 0.16);
+      --sombra: 0 20px 50px rgba(92, 45, 32, 0.12);
+      --sombra-forte: 0 25px 70px rgba(92, 45, 32, 0.18);
+      --container: min(1180px, 92%);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 184, 216, 0.55), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(255, 220, 170, 0.45), transparent 25%),
+        linear-gradient(180deg, #fff8fc 0%, #fff1f7 45%, #fff9fc 100%);
+      color: var(--texto);
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .bg-decor {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-decor::before,
+    .bg-decor::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(75px);
+      opacity: 0.45;
+    }
+
+    .bg-decor::before {
+      width: 320px;
+      height: 320px;
+      background: #ffafd3;
+      top: -70px;
+      left: -100px;
+    }
+
+    .bg-decor::after {
+      width: 360px;
+      height: 360px;
+      background: #ffd4a3;
+      right: -110px;
+      top: 130px;
+    }
+
+    .container {
+      width: var(--container);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      padding: 46px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .section-header .mini {
+      display: inline-flex;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--rosa);
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      box-shadow: var(--sombra);
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      line-height: 0.98;
+      color: var(--marrom);
+      margin-bottom: 10px;
+    }
+
+    .section-header p {
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.7;
+      color: var(--texto-claro);
+      font-size: 1.03rem;
+    }
+
+    .btn {
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: 0.25s ease;
+      font-size: 0.98rem;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rosa), var(--rosa-escuro));
+      color: white;
+      box-shadow: 0 14px 30px rgba(239, 75, 154, 0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--borda);
+      color: var(--marrom);
+      box-shadow: var(--sombra);
+    }
+
+    .btn-dark {
+      background: linear-gradient(135deg, var(--marrom), var(--marrom-2));
+      color: white;
+      box-shadow: 0 16px 35px rgba(92, 45, 32, 0.22);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 248, 252, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+    }
+
+    .nav {
+      width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .logo-slot {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: var(--sombra);
+      background: #fff;
+    }
+
+    .logo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1.12rem;
+      color: var(--marrom);
+    }
+
+    .brand-text span {
+      color: var(--texto-claro);
+      font-size: 0.92rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--texto);
+      font-weight: 700;
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    .hero {
+      padding: 42px 0 24px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: var(--sombra);
+      color: var(--rosa);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 5vw, 5.2rem);
+      line-height: 0.92;
+      color: var(--marrom);
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      max-width: 620px;
+      font-size: 1.06rem;
+      line-height: 1.75;
+      color: var(--texto-claro);
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .mini-info {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 650px;
+    }
+
+    .mini-card {
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid var(--borda);
+      border-radius: 24px;
+      box-shadow: var(--sombra);
+      padding: 18px;
+      text-align: center;
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--rosa);
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+
+    .mini-card span {
+      color: var(--texto-claro);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .hero-visual {
+      position: relative;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 28px;
+      padding: 12px;
+      box-shadow: var(--sombra-forte);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 114, 177, 0.24), transparent 65%);
+      right: -35px;
+      bottom: -30px;
+      pointer-events: none;
+    }
+
+    .hero-visual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .visual-box,
+    .visual-photo,
+    .photo-item,
+    .pedido-ilustrado,
+    .banner-doce {
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      background: #fff5fa;
+    }
+
+    .visual-box,
+    .visual-photo {
+      height: 240px;
+    }
+
+    .visual-box img,
+    .visual-photo img,
+    .photo-item img,
+    .banner-doce img,
+    .pedido-ilustrado img,
+    .order-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-item {
+      height: 135px;
+    }
+
+    .thumb-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 14px;
+    }
+
+    .social-card {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 245, 250, 0.95));
+      border: 1px solid var(--borda);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: var(--sombra);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .social-card .social-content {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .social-card .icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .social-card.instagram .icon {
+      background: linear-gradient(135deg, #ff8bd0, #ff5f95);
+      color: white;
+    }
+
+    .social-card.whatsapp .icon {
+      background: linear-gradient(135deg, #4ddf83, #21b75c);
+      color: white;
+    }
+
+    .social-card strong {
+      display: block;
+      color: var(--marrom);
+      margin-bottom: 4px;
+      font-size: 1.08rem;
+    }
+
+    .social-card span {
+      display: block;
+      color: var(--texto-claro);
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+
+    .social-card a {
+      text-decoration: none;
+      color: var(--rosa);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .brand-banner {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      align-items: center;
+      background: linear-gradient(135deg, var(--marrom), #6f3828 70%, #8b4a33 100%);
+      color: white;
+      padding: 32px;
+      border-radius: 36px;
+      box-shadow: 0 25px 60px rgba(92, 45, 32, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-banner::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      top: -60px;
+      right: -50px;
+    }
+
+    .brand-banner h3 {
+      font-size: clamp(2rem, 3vw, 3.3rem);
+      line-height: 0.98;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand-banner p {
+      line-height: 1.75;
+      position: relative;
+      z-index: 1;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 14px;
+    }
+
+    .brand-banner p:last-child {
+      margin-bottom: 0;
+    }
+
+    .banner-doce {
+      min-height: 360px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      z-index: 1;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .category {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--borda);
+      border-radius: 28px;
+      padding: 24px 20px;
+      box-shadow: var(--sombra);
+      text-align: center;
+      transition: 0.25s ease;
+    }
+
+    .category:hover {
+      transform: translateY(-5px);
+    }
+
+    .category .emoji {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 14px;
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #ffe2ef, #fff5fa);
+    }
+
+    .category h3 {
+      color: var(--marrom);
+      margin-bottom: 8px;
+      font-size: 1.12rem;
+    }
+
+    .category p {
+      color: var(--texto-claro);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .products-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .products-topbar p {
+      color: var(--texto-claro);
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--borda);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      display: flex;
+      flex-direction: column;
+      transition: 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-7px);
+    }
+
+    .product-image {
+      position: relative;
+      height: 230px;
+      overflow: hidden;
+      background: #fff5fa;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-image .fallback {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      font-weight: 800;
+      color: #c35f91;
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #fff;
+      color: #ff4fa3;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      max-width: 170px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      z-index: 2;
+      box-shadow: 0 10px 20px rgba(92, 45, 32, 0.12);
+    }
+
+    .product-content {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .product-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .product-title-row h3 {
+      color: var(--marrom);
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+
+    .category-label {
+      font-size: 0.88rem;
+      color: #9a6a70;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .price-pill {
+      background: #ffe5f1;
+      color: var(--rosa);
+      font-weight: 900;
+      border-radius: 999px;
+      padding: 8px 12px;
+      white-space: nowrap;
+      font-size: 0.88rem;
+    }
+
+    .product-content p {
+      color: var(--texto-claro);
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    .flavor-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .flavor-chip {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--rosa-suave);
+      color: var(--marrom);
+      border: 1px solid #ffd6e7;
+      font-weight: 700;
+      font-size: 0.83rem;
+    }
+
+    .product-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .order-section {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .order-info,
+    .order-form {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--borda);
+      border-radius: 34px;
+      box-shadow: var(--sombra);
+      overflow: hidden;
+    }
+
+    .order-info {
+      padding: 28px;
+      background: linear-gradient(160deg, #fff 0%, #fff4f9 55%, #ffe6f1 100%);
+      position: relative;
+    }
+
+    .order-info h3 {
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--marrom);
+      margin-bottom: 14px;
+    }
+
+    .order-info p,
+    .order-info li {
+      color: var(--texto-claro);
+      line-height: 1.75;
+    }
+
+    .order-info ul {
+      margin: 18px 0 22px 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .pedido-ilustrado {
+      min-height: 260px;
+      background: linear-gradient(145deg, #ffddea, #fff3f9);
+      margin-top: 18px;
+    }
+
+    .order-form {
+      padding: 26px;
+    }
+
+    .order-form h3 {
+      color: var(--marrom);
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+    }
+
+    .order-form p {
+      color: var(--texto-claro);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--marrom);
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1.5px solid #f5c5dc;
+      border-radius: 18px;
+      padding: 14px 16px;
+      font: inherit;
+      background: #fff;
+      color: var(--texto);
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--rosa);
+      box-shadow: 0 0 0 4px rgba(239, 75, 154, 0.12);
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .field small {
+      color: var(--texto-claro);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .order-preview {
+      margin-top: 18px;
+      background: #fff7fb;
+      border: 1px dashed #ffb6d7;
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .order-preview strong {
+      display: block;
+      color: var(--marrom);
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .order-preview p {
+      margin-bottom: 0;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    .form-alert {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #fff0f6;
+      color: #9f2e65;
+      border: 1px solid #ffc1dc;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .form-alert.show {
+      display: block;
+    }
+
+    .form-alert.success {
+      background: #f0fff6;
+      color: #1f7a45;
+      border-color: #b8eccd;
+    }
+
+    .form-alert.error {
+      background: #fff0f6;
+      color: #9f2e65;
+      border-color: #ffc1dc;
+    }
+
+    .footer {
+      padding: 20px 0 48px;
+    }
+
+    .footer-box {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      background: linear-gradient(135deg, var(--marrom), #6f3828 70%, #8b4a33 100%);
+      border-radius: 34px;
+      padding: 28px;
+      color: white;
+      box-shadow: 0 25px 60px rgba(92, 45, 32, 0.2);
+    }
+
+    .footer-box h4 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .footer-box p {
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.7;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .tiny {
+      font-size: 0.82rem;
+      opacity: 0.85;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1080px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .brand-banner,
+      .order-section,
+      .footer-box {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .hero-grid,
+      .brand-banner,
+      .order-section,
+      .hero-visual-grid,
+      .products-grid,
+      .categories,
+      .top-links,
+      .mini-info,
+      .form-grid,
+      .thumb-row,
+      .footer-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        line-height: 1.02;
+      }
+
+      .hero {
+        padding-top: 28px;
+      }
+
+      .section {
+        padding: 34px 0;
+      }
+
+      .visual-box,
+      .visual-photo {
+        height: 220px;
+      }
+
+      .photo-item {
+        height: 180px;
+      }
+
+      .social-card {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-decor"></div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <div class="brand">
+        <div class="logo-slot">
+          <img src="43851464-5B31-41D5-BA27-2FD2AD9E13C5.jpeg" alt="Logo Delícias da Karen" />
+        </div>
+        <div class="brand-text">
+          <strong>Delícias da Karen</strong>
+          <span>Doces artesanais • feitos com carinho</span>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="#produtos">Produtos</a>
+        <a href="#pedidos">Peça aqui</a>
+        <a href="#contato">Contato</a>
+        <a href="#pedidos" class="btn btn-primary">Fazer pedido</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="hero-tag">💖 Doces artesanais feitos com amor</div>
+
+          <h1>Doces que encantam no olhar e viciam no sabor</h1>
+
+          <p>
+            Perfeitos para presentear, celebrar ou simplesmente se mimar. Cada detalhe é pensado para entregar não só sabor, mas uma experiência única.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#pedidos">💬 Peça aqui</a>
+            <a class="btn btn-secondary" href="#produtos">🍓 Ver cardápio</a>
+          </div>
+
+          <div class="mini-info">
+            <div class="mini-card">
+              <strong>Pedidos</strong>
+              <span>Monte seu pedido rápido e fácil pelo WhatsApp 📲</span>
+            </div>
+            <div class="mini-card">
+              <strong>Instagram</strong>
+              <span>Veja nossos doces, novidades e inspirações 💖</span>
+            </div>
+            <div class="mini-card">
+              <strong>WhatsApp</strong>
+              <span>Fale direto conosco e garanta seu pedido na hora 🚀</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-visual-grid">
+            <div class="visual-box">
+              <img src="WhatsApp Image 2026-04-25 at 11.39.55.jpeg" alt="Cone trufado da Delícias da Karen" />
+            </div>
+
+            <div class="visual-photo">
+              <img src="WhatsApp Image 2026-04-23 at 17.16.18 (2).jpeg" alt="Brigadeiros gourmet da Delícias da Karen" />
+            </div>
+          </div>
+
+          <div class="thumb-row">
+            <div class="photo-item">
+              <img src="WhatsApp Image 2026-04-23 at 17.22.06.jpeg" alt="Brigadeiros artesanais" />
+            </div>
+            <div class="photo-item">
+              <img src="WhatsApp Image 2026-04-23 at 17.14.18.jpeg" alt="Cones trufados" />
+            </div>
+            <div class="photo-item">
+              <img src="WhatsApp Image 2026-04-25 at 11.42.47.jpeg" alt="Caixas especiais de doces" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="top-links">
+          <div class="social-card instagram">
+            <div class="social-content">
+              <div class="icon">📸</div>
+              <div>
+                <strong>Instagram</strong>
+                <span>Clique aqui para visualizar o perfil oficial da marca.</span>
+              </div>
+            </div>
+            <a id="instagramLink" href="#" target="_blank" rel="noopener noreferrer">Abrir</a>
+          </div>
+
+          <div class="social-card whatsapp">
+            <div class="social-content">
+              <div class="icon">💬</div>
+              <div>
+                <strong>WhatsApp</strong>
+                <span>Atalho para conversa rápida e fechamento de pedido.</span>
+              </div>
+            </div>
+            <a id="whatsappLink" href="#" target="_blank" rel="noopener noreferrer">Conversar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="historia">
+      <div class="container">
+        <div class="brand-banner">
+          <div>
+            <h3>História da marca</h3>
+            <p>
+              Tudo começou em 2020, no início da pandemia, quando Karen tinha apenas 14 anos. Na época, seu cachorro Nino estava começando a ficar cego e a família passava por um momento difícil, sem renda por causa da crise.
+            </p>
+            <p>
+              Depois de pesquisar formas de ajudar, ela teve a ideia de vender brigadeiros para arrecadar dinheiro e levá-lo a uma veterinária oftalmologista. As primeiras caixinhas eram simples, vendidas pelas redes sociais, mas feitas com muito carinho.
+            </p>
+            <p>
+              Em pouco tempo, Karen conseguiu o valor necessário. Logo depois, uma cliente pediu docinhos para a festa da filha — e foi assim que a Delícias da Karen começou a crescer. Desde então, a marca conquistou clientes, criou novos produtos e segue transformando momentos em lembranças doces.
+            </p>
+          </div>
+
+          <div class="banner-doce">
+            <img src="WhatsApp Image 2026-04-25 at 10.49.23.jpeg" alt="Doce especial da Delícias da Karen" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <span class="mini">Categorias</span>
+          <h2>Nossos produtos</h2>
+          <p>Encontre facilmente seus doces favoritos e escolha com praticidade 🍫✨.</p>
+        </div>
+
+        <div class="categories">
+          <div class="category">
+            <div class="emoji">🍫</div>
+            <h3>Clássicos que todo mundo ama</h3>
+            <p>Brigadeiro, beijinho e sabores tradicionais feitos do jeito certo — perfeitos para qualquer ocasião.</p>
+          </div>
+
+          <div class="category">
+            <div class="emoji">🎉</div>
+            <h3>Datas especiais</h3>
+            <p>Doces criados para celebrar: Páscoa, Natal, aniversários e datas que merecem algo único.</p>
+          </div>
+
+          <div class="category">
+            <div class="emoji">🍦</div>
+            <h3>Cones e trufas gourmet</h3>
+            <p>Opções recheadas, caprichadas e perfeitas para quem quer um doce individual com muito sabor.</p>
+          </div>
+
+          <div class="category">
+            <div class="emoji">🎁</div>
+            <h3>Presentes e kits especiais</h3>
+            <p>Caixas montadas com carinho, ideais para presentear e surpreender em momentos especiais.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="produtos">
+      <div class="container">
+        <div class="section-header">
+          <span class="mini">Cardápio</span>
+          <h2>Produtos em destaque</h2>
+          <p>Escolha um produto, veja os sabores disponíveis e envie seu pedido direto pelo WhatsApp.</p>
+        </div>
+
+        <div class="products-topbar">
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="pedidos">
+      <div class="container">
+        <div class="section-header">
+          <span class="mini">📲 Peça aqui</span>
+          <h2>Faça seu pedido de forma rápida e fácil</h2>
+          <p>Preencha as informações principais e o site monta uma mensagem pronta para enviar no WhatsApp.</p>
+        </div>
+
+
+          <div class="order-form">
+            <h3>Monte seu pedido</h3>
+            <p>Os campos com preenchimento obrigatório nos ajudam a entender melhor sua encomenda.</p>
+
+            <form id="pedidoForm">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="nome">Seu nome *</label>
+                  <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required />
+                </div>
+
+                <div class="field">
+                  <label for="telefone">Seu telefone *</label>
+                  <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required />
+                </div>
+
+                <div class="field">
+                  <label for="produto">Escolha o doce *</label>
+                  <select id="produto" name="produto" required>
+                    <option value="" disabled selected>Selecione um produto</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="sabores">Escolha o sabor *</label>
+                  <select id="sabores" name="sabores" required>
+                    <option value="" disabled selected>Selecione um produto primeiro</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="quantidade">Quantidade *</label>
+                  <input type="text" id="quantidade" name="quantidade" placeholder="Ex: 50 unidades / 2 caixas" required />
+                  <small>Exemplo: 20 unidades, 2 caixas, 5 cones, 10 trufas...</small>
+                </div>
+
+                <div class="field">
+                  <label for="dataEntrega">Data desejada</label>
+                  <input type="date" id="dataEntrega" name="dataEntrega" />
+                </div>
+
+                <div class="field">
+                  <label for="tipoEntrega">Como deseja receber?</label>
+                  <select id="tipoEntrega" name="tipoEntrega">
+                    <option value="Retirada">Retirada</option>
+                    <option value="Entrega">Entrega</option>
+                    <option value="A combinar">A combinar</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="endereco">Endereço para entrega</label>
+                  <input type="text" id="endereco" name="endereco" placeholder="Preencha apenas se escolher entrega" />
+                </div>
+
+                <div class="field full">
+                  <label for="obs">Observações</label>
+                  <textarea id="obs" name="obs" placeholder="Ex: Quero sabores mistos, decoração especial, embalagem para presente..."></textarea>
+                </div>
+              </div>
+
+              <div class="form-alert" id="formAlert">
+                Preencha os campos obrigatórios antes de enviar o pedido.
+              </div>
+
+              <div class="product-actions" style="margin-top: 18px;">
+                <button type="button" class="btn btn-primary" id="enviarPedido">Enviar para WhatsApp</button>
+                <a class="btn btn-secondary" id="botaoInstagramPedido" href="#" target="_blank" rel="noopener noreferrer">Ver Instagram</a>
+              </div>
+            </form>
+
+            <div class="order-preview">
+              <strong>Prévia da mensagem</strong>
+              <p id="previewText">Seu pedido vai aparecer aqui conforme você preencher.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contato">
+    <div class="container">
+      <div class="footer-box">
+        <div>
+          <h4>Delícias da Karen</h4>
+          <p>Doces feitos com carinho, perfeitos para transformar qualquer momento em algo especial. 💖🍫</p>
+          <div class="tiny">Encomende e surpreenda quem você ama!</div>
+        </div>
+
+        <div class="footer-actions">
+          <a class="btn btn-primary" id="footerWhatsapp" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a class="btn btn-secondary" id="footerInstagram" href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================================
+       CONFIGURAÇÕES PRINCIPAIS
+       Edite aqui os links, contatos e imagens gerais do site.
+       ========================================================= */
+
+    const config = {
+      brandName: 'Delícias da Karen',
+      instagramUrl: 'https://instagram.com/delicias_da.karen',
+      whatsappNumber: '5511949611216',
+      whatsappDisplay: '(11) 94961-1216',
+      whatsappDefaultMessage: 'Olá! Vim pelo site da Delícias da Karen e gostaria de fazer um pedido.'
+    };
+
+    // Quando o site for aberto pelo servidor Node, a API fica no mesmo endereço.
+    // Se você abrir o arquivo direto pelo navegador, ele tenta usar localhost:3000.
+    const API_BASE = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+
+    /* =========================================================
+       PRODUTOS
+       Para adicionar um doce novo, copie um objeto inteiro,
+       cole abaixo e troque as informações.
+       ========================================================= */
+
+    const produtos = [
+      {
+        nome: 'Brigadeiros Tradicionais',
+        categoria: 'Clássicos',
+        tag: 'Mais pedido',
+        preco: 'A partir de R$ 12,00',
+        descricao: '',
+        sabores: ['Brigadeiro', 'Beijinho', 'Pé de Moça'],
+        image: '9104DA70-8B8E-4F16-BE98-2EC20AD1560E.jpeg',
+        placeholder: 'FOTO DO BRIGADEIRO TRADICIONAL'
+      },
+      {
+        nome: 'Brigadeiros Gourmet',
+        categoria: 'Gourmet',
+        tag: 'Especial',
+        preco: 'A partir de R$ 12,00',
+        descricao: '',
+        sabores: ['Paçoca', 'Ninho com Nutella', 'Bicho de pé', 'Chocotella', 'Crocante com Nutella'],
+        image: 'WhatsApp Image 2026-04-23 at 17.14.18 (1).jpeg',
+        placeholder: 'FOTO DO BRIGADEIRO GOURMET'
+      },
+      {
+        nome: 'Cones',
+        categoria: 'Trufados',
+        tag: 'Destaque',
+        preco: 'A partir de R$ 8,00',
+        descricao: '',
+        sabores: ['Beijinho', 'Brigadeiro', 'Maracujá', 'Brigadeiro com Nutella', 'Ninho com Brigadeiro', 'Ninho com Nutella'],
+        image: 'WhatsApp Image 2026-04-25 at 11.39.55.jpeg',
+        placeholder: 'FOTO DO CONE TRUFADO'
+      },
+      {
+        nome: 'Ovos de Páscoa',
+        categoria: 'Datas especiais',
+        tag: 'Consulte sabores',
+        preco: 'A partir de R$ 25,00',
+        descricao: '',
+        sabores: ['Brigadeiro', 'Ninho com Nutella', 'Prestígio', 'Oreo'],
+        image: 'WhatsApp Image 2026-04-25 at 11.42.47.jpeg',
+        placeholder: 'FOTO DO OVO DE PÁSCOA'
+      },
+      {
+        nome: 'Trufas',
+        categoria: 'Recheadas',
+        tag: 'Novo',
+        preco: 'A partir de R$ 3,50',
+        descricao: '',
+        sabores: ['Brigadeiro', 'Ninho', 'Maracujá', 'Prestígio', 'Ninho com Nutella', 'Ninho com Brigadeiro'],
+        image: 'PHOTO-2026-05-05-20-20-04.jpg',
+        placeholder: 'FOTO DAS TRUFAS'
+      }
+    ];
+
+    const whatsappBase = `https://wa.me/${config.whatsappNumber}`;
+
+    const instagramLink = document.getElementById('instagramLink');
+    const whatsappLink = document.getElementById('whatsappLink');
+    const footerWhatsapp = document.getElementById('footerWhatsapp');
+    const footerInstagram = document.getElementById('footerInstagram');
+    const botaoInstagramPedido = document.getElementById('botaoInstagramPedido');
+
+    instagramLink.href = config.instagramUrl;
+    whatsappLink.href = `${whatsappBase}?text=${encodeURIComponent(config.whatsappDefaultMessage)}`;
+    footerWhatsapp.href = `${whatsappBase}?text=${encodeURIComponent(config.whatsappDefaultMessage)}`;
+    footerInstagram.href = config.instagramUrl;
+    botaoInstagramPedido.href = config.instagramUrl;
+
+    const productsGrid = document.getElementById('productsGrid');
+    const produtoSelect = document.getElementById('produto');
+    const saborSelect = document.getElementById('sabores');
+    const pedidoForm = document.getElementById('pedidoForm');
+    const formAlert = document.getElementById('formAlert');
+
+    const nome = document.getElementById('nome');
+    const telefone = document.getElementById('telefone');
+    const produto = document.getElementById('produto');
+    const quantidade = document.getElementById('quantidade');
+    const dataEntrega = document.getElementById('dataEntrega');
+    const tipoEntrega = document.getElementById('tipoEntrega');
+    const endereco = document.getElementById('endereco');
+    const obs = document.getElementById('obs');
+    const previewText = document.getElementById('previewText');
+    const enviarPedido = document.getElementById('enviarPedido');
+
+    function escapeHTML(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function formatDate(dateValue) {
+      if (!dateValue) return 'Não informada';
+      const [year, month, day] = dateValue.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    function atualizarSabores() {
+      const produtoEscolhido = produtos.find((item) => item.nome === produtoSelect.value);
+
+      saborSelect.innerHTML = '';
+
+      const placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      placeholder.textContent = produtoEscolhido ? 'Selecione um sabor' : 'Selecione um produto primeiro';
+      saborSelect.appendChild(placeholder);
+
+      if (!produtoEscolhido) {
+        updatePreview();
+        return;
+      }
+
+      produtoEscolhido.sabores.forEach((sabor) => {
+        const option = document.createElement('option');
+        option.value = sabor;
+        option.textContent = sabor;
+        saborSelect.appendChild(option);
+      });
+
+      updatePreview();
+    }
+
+    function buildMessage() {
+      return `Olá! Quero fazer um pedido na ${config.brandName}.\n\n` +
+        `Nome: ${nome.value || 'Não informado'}\n` +
+        `Telefone: ${telefone.value || 'Não informado'}\n` +
+        `Produto: ${produto.value || 'Não informado'}\n` +
+        `Sabor: ${saborSelect.value || 'Não informado'}\n` +
+        `Quantidade: ${quantidade.value || 'Não informada'}\n` +
+        `Data desejada: ${formatDate(dataEntrega.value)}\n` +
+        `Forma de recebimento: ${tipoEntrega.value || 'Não informado'}\n` +
+        `Observações: ${obs.value || 'Sem observações'}\n\n` +
+        `Vim pelo site e gostaria de confirmar os detalhes.`;
+    }
+
+    function updatePreview() {
+      previewText.textContent = buildMessage();
+    }
+
+    function mostrarAlerta(mensagem, tipo = 'error') {
+      formAlert.textContent = mensagem;
+      formAlert.className = `form-alert show ${tipo}`;
+    }
+
+    function esconderAlerta() {
+      formAlert.className = 'form-alert';
+      formAlert.textContent = '';
+    }
+
+    async function salvarPedidoNoBanco() {
+      const order = {
+        nome: nome.value.trim(),
+        telefone: telefone.value.trim(),
+        produto: produto.value,
+        sabor: saborSelect.value,
+        quantidade: quantidade.value.trim(),
+        dataEntrega: dataEntrega.value,
+        tipoEntrega: tipoEntrega.value,
+        endereco: endereco.value.trim(),
+        obs: obs.value.trim()
+      };
+
+      const response = await fetch(`${API_BASE}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao salvar pedido no banco de dados.');
+      }
+
+      return data;
+    }
+
+    function criarCardsDeProduto() {
+      produtos.forEach((item, index) => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+
+        const saboresHtml = item.sabores
+          .map((sabor) => `<span class="flavor-chip">${escapeHTML(sabor)}</span>`)
+          .join('');
+
+        const imageHtml = item.image
+          ? `<img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.nome)}" />`
+          : `<div class="fallback">${escapeHTML(item.placeholder || 'FOTO DO PRODUTO')}</div>`;
+
+        const productMessage = `Olá! Tenho interesse em ${item.nome}. Pode me passar mais detalhes?`;
+        const productWhatsappLink = `${whatsappBase}?text=${encodeURIComponent(productMessage)}`;
+
+        card.innerHTML = `
+          <div class="product-image">
+            <div class="product-tag" title="${escapeHTML(item.tag)}">${escapeHTML(item.tag)}</div>
+            ${imageHtml}
+          </div>
+          <div class="product-content">
+            <div class="product-title-row">
+              <div>
+                <h3>${escapeHTML(item.nome)}</h3>
+                <div class="category-label">${escapeHTML(item.categoria)}</div>
+              </div>
+              <div class="price-pill">${escapeHTML(item.preco)}</div>
+            </div>
+            <p>${escapeHTML(item.descricao)}</p>
+            <div class="flavor-list">${saboresHtml}</div>
+            <div class="product-actions">
+              <a class="btn btn-primary" href="${productWhatsappLink}" target="_blank" rel="noopener noreferrer">Pedir este</a>
+              <button class="btn btn-secondary" type="button" data-product-index="${index}">Selecionar</button>
+            </div>
+          </div>
+        `;
+
+        productsGrid.appendChild(card);
+
+        const option = document.createElement('option');
+        option.value = item.nome;
+        option.textContent = item.nome;
+        produtoSelect.appendChild(option);
+      });
+    }
+
+    criarCardsDeProduto();
+
+    produtoSelect.addEventListener('change', atualizarSabores);
+    saborSelect.addEventListener('change', updatePreview);
+
+    productsGrid.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-product-index]');
+      if (!button) return;
+
+      const index = Number(button.getAttribute('data-product-index'));
+      const produtoEscolhido = produtos[index];
+
+      if (!produtoEscolhido) return;
+
+      produtoSelect.value = produtoEscolhido.nome;
+      produtoSelect.dispatchEvent(new Event('change', { bubbles: true }));
+      document.getElementById('pedidos').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    const fields = [nome, telefone, produto, saborSelect, quantidade, dataEntrega, tipoEntrega, endereco, obs];
+
+    fields.forEach((field) => {
+      field.addEventListener('input', updatePreview);
+      field.addEventListener('change', updatePreview);
+    });
+
+    enviarPedido.addEventListener('click', async () => {
+      esconderAlerta();
+
+      if (!pedidoForm.checkValidity()) {
+        mostrarAlerta('Preencha os campos obrigatórios antes de enviar o pedido.', 'error');
+        pedidoForm.reportValidity();
+        return;
+      }
+
+      const textoOriginalBotao = enviarPedido.textContent;
+      enviarPedido.disabled = true;
+      enviarPedido.textContent = 'Salvando pedido...';
+
+      try {
+        await salvarPedidoNoBanco();
+        mostrarAlerta('Pedido salvo no banco de dados. Abrindo WhatsApp para confirmação com a Karen...', 'success');
+
+        const message = buildMessage();
+        const link = `${whatsappBase}?text=${encodeURIComponent(message)}`;
+        window.open(link, '_blank');
+
+        pedidoForm.reset();
+        atualizarSabores();
+        updatePreview();
+      } catch (error) {
+        console.error(error);
+        mostrarAlerta('Não foi possível salvar o pedido no banco. Verifique se o servidor está ligado e tente novamente.', 'error');
+      } finally {
+        enviarPedido.disabled = false;
+        enviarPedido.textContent = textoOriginalBotao;
+      }
+    });
+
+    updatePreview();
+  </script>
+</body>
+</html>

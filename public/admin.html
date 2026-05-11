@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin | Delícias da Karen</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --rosa: #ef4b9a;
+      --rosa-escuro: #d93883;
+      --rosa-suave: #fff5fa;
+      --marrom: #5c2d20;
+      --marrom-2: #7b3f2e;
+      --texto: #4a2c27;
+      --texto-claro: #7d5b57;
+      --borda: rgba(239, 75, 154, 0.18);
+      --sombra: 0 20px 50px rgba(92, 45, 32, 0.12);
+      --container: min(1180px, 92%);
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 184, 216, 0.55), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(255, 220, 170, 0.45), transparent 25%),
+        linear-gradient(180deg, #fff8fc 0%, #fff1f7 45%, #fff9fc 100%);
+      color: var(--texto);
+    }
+
+    .container {
+      width: var(--container);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 248, 252, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .topbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--marrom);
+    }
+
+    .brand span {
+      color: var(--texto-claro);
+      font-size: 0.92rem;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: 0.2s ease;
+      font-size: 0.92rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rosa), var(--rosa-escuro));
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(239, 75, 154, 0.22);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--marrom);
+      border: 1px solid var(--borda);
+      box-shadow: var(--sombra);
+    }
+
+    .btn-danger {
+      background: #fff1f1;
+      color: #a32c2c;
+      border: 1px solid #ffc6c6;
+    }
+
+    .btn-small {
+      padding: 9px 12px;
+      font-size: 0.82rem;
+    }
+
+    .login-wrap {
+      min-height: calc(100vh - 80px);
+      display: grid;
+      place-items: center;
+      padding: 40px 0;
+    }
+
+    .login-card,
+    .panel-card,
+    .order-card,
+    .stat-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--borda);
+      box-shadow: var(--sombra);
+      border-radius: 28px;
+    }
+
+    .login-card {
+      width: min(440px, 100%);
+      padding: 28px;
+    }
+
+    .login-card h1 {
+      color: var(--marrom);
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .login-card p {
+      color: var(--texto-claro);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      font-weight: 800;
+      color: var(--marrom);
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1.5px solid #f5c5dc;
+      border-radius: 16px;
+      padding: 13px 14px;
+      font: inherit;
+      color: var(--texto);
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--rosa);
+      box-shadow: 0 0 0 4px rgba(239, 75, 154, 0.12);
+    }
+
+    .alert {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #fff0f6;
+      color: #9f2e65;
+      border: 1px solid #ffc1dc;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .alert.show {
+      display: block;
+    }
+
+    .main {
+      padding: 34px 0 50px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .panel-head h1 {
+      color: var(--marrom);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .panel-head p {
+      color: var(--texto-claro);
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      padding: 18px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.9rem;
+      color: var(--rosa);
+      margin-bottom: 4px;
+    }
+
+    .stat-card span {
+      color: var(--texto-claro);
+      font-weight: 700;
+    }
+
+    .panel-card {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 220px auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .orders-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .order-card {
+      padding: 20px;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .order-top h2 {
+      color: var(--marrom);
+      font-size: 1.28rem;
+      margin-bottom: 5px;
+    }
+
+    .order-meta {
+      color: var(--texto-claro);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .status-pendente {
+      background: #fff7d8;
+      color: #896600;
+    }
+
+    .status-em-preparo {
+      background: #eaf2ff;
+      color: #245a9c;
+    }
+
+    .status-finalizado {
+      background: #ebfff2;
+      color: #21753f;
+    }
+
+    .status-cancelado {
+      background: #fff0f0;
+      color: #9b2f2f;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .detail {
+      background: #fff7fb;
+      border: 1px solid #ffe0ee;
+      border-radius: 16px;
+      padding: 12px;
+      line-height: 1.45;
+      min-height: 74px;
+    }
+
+    .detail strong {
+      display: block;
+      color: var(--marrom);
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--texto-claro);
+      padding: 38px;
+      line-height: 1.6;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 860px) {
+      .stats,
+      .details,
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filters .btn {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar-content,
+      .panel-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .stats,
+      .details,
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .order-actions .btn,
+      .order-actions select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-content">
+      <div class="brand">
+        <strong>Delícias da Karen</strong>
+        <span>Painel administrativo de pedidos</span>
+      </div>
+      <div>
+        <a class="btn btn-secondary" href="/">Ver site</a>
+        <button class="btn btn-danger hidden" id="logoutBtn" type="button">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="login-wrap" id="loginSection">
+    <div class="login-card">
+      <h1>Entrar no painel</h1>
+      <p>Digite a senha administrativa para visualizar os pedidos recebidos pelo site.</p>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="adminPassword">Senha do painel</label>
+          <input type="password" id="adminPassword" placeholder="Ex: karen123" required />
+        </div>
+        <button class="btn btn-primary" type="submit">Acessar pedidos</button>
+        <div class="alert" id="loginAlert">Senha inválida.</div>
+      </form>
+    </div>
+  </section>
+
+  <main class="main hidden" id="panelSection">
+    <div class="container">
+      <div class="panel-head">
+        <div>
+          <h1>Pedidos recebidos</h1>
+          <p>Pedidos enviados pelo formulário do site. Você acompanhar status, chamar no WhatsApp e excluir testes.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-primary" id="refreshBtn" type="button">Atualizar</button>
+          <button class="btn btn-secondary" id="exportBtn" type="button">Exportar CSV</button>
+        </div>
+      </div>
+
+      <section class="stats" id="statsGrid">
+        <div class="stat-card"><strong id="totalPedidos">0</strong><span>Total</span></div>
+        <div class="stat-card"><strong id="pendentes">0</strong><span>Pendentes</span></div>
+        <div class="stat-card"><strong id="emPreparo">0</strong><span>Em preparo</span></div>
+        <div class="stat-card"><strong id="finalizados">0</strong><span>Finalizados</span></div>
+      </section>
+
+      <section class="panel-card">
+        <div class="filters">
+          <div class="field" style="margin:0;">
+            <label for="searchInput">Buscar pedido</label>
+            <input type="search" id="searchInput" placeholder="Busque por nome, telefone, produto ou sabor" />
+          </div>
+
+          <div class="field" style="margin:0;">
+            <label for="statusFilter">Filtrar status</label>
+            <select id="statusFilter">
+              <option value="todos">Todos</option>
+              <option value="pendente">Pendente</option>
+              <option value="em preparo">Em preparo</option>
+              <option value="finalizado">Finalizado</option>
+              <option value="cancelado">Cancelado</option>
+            </select>
+          </div>
+
+          <button class="btn btn-secondary" id="clearFiltersBtn" type="button">Limpar filtros</button>
+        </div>
+      </section>
+
+      <section class="orders-grid" id="ordersGrid">
+        <div class="empty">Carregando pedidos...</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const API_BASE = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+    const loginSection = document.getElementById('loginSection');
+    const panelSection = document.getElementById('panelSection');
+    const loginForm = document.getElementById('loginForm');
+    const adminPassword = document.getElementById('adminPassword');
+    const loginAlert = document.getElementById('loginAlert');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const ordersGrid = document.getElementById('ordersGrid');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const searchInput = document.getElementById('searchInput');
+    const statusFilter = document.getElementById('statusFilter');
+    const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+    let orders = [];
+
+    function getSenha() {
+      return sessionStorage.getItem('dkaren_admin_password') || '';
+    }
+
+    function setSenha(senha) {
+      sessionStorage.setItem('dkaren_admin_password', senha);
+    }
+
+    function limparSenha() {
+      sessionStorage.removeItem('dkaren_admin_password');
+    }
+
+    function escapeHTML(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function formatarDataBR(data) {
+      if (!data) return 'Não informada';
+
+      if (/^\d{4}-\d{2}-\d{2}$/.test(data)) {
+        const [ano, mes, dia] = data.split('-');
+        return `${dia}/${mes}/${ano}`;
+      }
+
+      const parsed = new Date(data.replace(' ', 'T'));
+      if (Number.isNaN(parsed.getTime())) return data;
+
+      return parsed.toLocaleString('pt-BR');
+    }
+
+    function statusClasse(status) {
+      return `status-${String(status).replaceAll(' ', '-')}`;
+    }
+
+    function montarLinkWhatsApp(order) {
+      const telefoneLimpo = String(order.telefone || '').replace(/\D/g, '');
+      const numero = telefoneLimpo.startsWith('55') ? telefoneLimpo : `55${telefoneLimpo}`;
+      const mensagem = `Olá, ${order.nome}! Aqui é a Karen. Recebi seu pedido de ${order.produto} (${order.sabor}) pelo site e gostaria de confirmar os detalhes.`;
+      return `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    }
+
+    function calcularEstatisticas(lista) {
+      document.getElementById('totalPedidos').textContent = lista.length;
+      document.getElementById('pendentes').textContent = lista.filter((o) => o.status === 'pendente').length;
+      document.getElementById('emPreparo').textContent = lista.filter((o) => o.status === 'em preparo').length;
+      document.getElementById('finalizados').textContent = lista.filter((o) => o.status === 'finalizado').length;
+    }
+
+    function filtrarPedidos() {
+      const termo = searchInput.value.trim().toLowerCase();
+      const status = statusFilter.value;
+
+      return orders.filter((order) => {
+        const texto = [
+          order.nome,
+          order.telefone,
+          order.produto,
+          order.sabor,
+          order.quantidade,
+          order.tipoEntrega,
+          order.endereco,
+          order.obs
+        ].join(' ').toLowerCase();
+
+        const bateTexto = !termo || texto.includes(termo);
+        const bateStatus = status === 'todos' || order.status === status;
+
+        return bateTexto && bateStatus;
+      });
+    }
+
+    function renderizarPedidos() {
+      const lista = filtrarPedidos();
+      calcularEstatisticas(orders);
+
+      if (lista.length === 0) {
+        ordersGrid.innerHTML = '<div class="empty">Nenhum pedido encontrado.</div>';
+        return;
+      }
+
+      ordersGrid.innerHTML = lista.map((order) => `
+        <article class="order-card" data-id="${order.id}">
+          <div class="order-top">
+            <div>
+              <h2>#${order.id} — ${escapeHTML(order.nome)}</h2>
+              <div class="order-meta">Recebido em ${formatarDataBR(order.createdAt)}</div>
+            </div>
+            <span class="status ${statusClasse(order.status)}">${escapeHTML(order.status)}</span>
+          </div>
+
+          <div class="details">
+            <div class="detail"><strong>Telefone</strong>${escapeHTML(order.telefone)}</div>
+            <div class="detail"><strong>Produto</strong>${escapeHTML(order.produto)}</div>
+            <div class="detail"><strong>Sabor</strong>${escapeHTML(order.sabor)}</div>
+            <div class="detail"><strong>Quantidade</strong>${escapeHTML(order.quantidade)}</div>
+            <div class="detail"><strong>Data desejada</strong>${formatarDataBR(order.dataEntrega)}</div>
+            <div class="detail"><strong>Recebimento</strong>${escapeHTML(order.tipoEntrega || 'A combinar')}</div>
+            <div class="detail"><strong>Endereço</strong>${escapeHTML(order.endereco || 'Não informado')}</div>
+            <div class="detail" style="grid-column: span 2;"><strong>Observações</strong>${escapeHTML(order.obs || 'Sem observações')}</div>
+          </div>
+
+          <div class="order-actions">
+            <a class="btn btn-primary btn-small" href="${montarLinkWhatsApp(order)}" target="_blank" rel="noopener noreferrer">Chamar no WhatsApp</a>
+            <select class="statusSelect" aria-label="Alterar status do pedido">
+              <option value="pendente" ${order.status === 'pendente' ? 'selected' : ''}>Pendente</option>
+              <option value="em preparo" ${order.status === 'em preparo' ? 'selected' : ''}>Em preparo</option>
+              <option value="finalizado" ${order.status === 'finalizado' ? 'selected' : ''}>Finalizado</option>
+              <option value="cancelado" ${order.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
+            </select>
+            <button class="btn btn-danger btn-small deleteBtn" type="button">Excluir</button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    async function carregarPedidos() {
+      ordersGrid.innerHTML = '<div class="empty">Carregando pedidos...</div>';
+
+      const response = await fetch(`${API_BASE}/api/admin/orders`, {
+        headers: { 'x-admin-password': getSenha() }
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.status === 401) {
+        limparSenha();
+        mostrarLogin();
+        loginAlert.textContent = 'Senha inválida ou sessão expirada.';
+        loginAlert.classList.add('show');
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao carregar pedidos.');
+      }
+
+      orders = data.orders || [];
+      renderizarPedidos();
+    }
+
+    async function atualizarStatus(id, status) {
+      const response = await fetch(`${API_BASE}/api/admin/orders/${id}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-password': getSenha()
+        },
+        body: JSON.stringify({ status })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao atualizar status.');
+      }
+
+      await carregarPedidos();
+    }
+
+    async function excluirPedido(id) {
+      const confirmar = window.confirm('Tem certeza que deseja excluir este pedido?');
+      if (!confirmar) return;
+
+      const response = await fetch(`${API_BASE}/api/admin/orders/${id}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-password': getSenha() }
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Erro ao excluir pedido.');
+      }
+
+      await carregarPedidos();
+    }
+
+    function mostrarPainel() {
+      loginSection.classList.add('hidden');
+      panelSection.classList.remove('hidden');
+      logoutBtn.classList.remove('hidden');
+    }
+
+    function mostrarLogin() {
+      loginSection.classList.remove('hidden');
+      panelSection.classList.add('hidden');
+      logoutBtn.classList.add('hidden');
+    }
+
+    function exportarCSV() {
+      if (orders.length === 0) {
+        window.alert('Não existem pedidos para exportar.');
+        return;
+      }
+
+      const headers = ['ID', 'Recebido em', 'Nome', 'Telefone', 'Produto', 'Sabor', 'Quantidade', 'Data desejada', 'Recebimento', 'Endereço', 'Observações', 'Status'];
+      const linhas = orders.map((order) => [
+        order.id,
+        order.createdAt,
+        order.nome,
+        order.telefone,
+        order.produto,
+        order.sabor,
+        order.quantidade,
+        order.dataEntrega,
+        order.tipoEntrega,
+        order.endereco,
+        order.obs,
+        order.status
+      ]);
+
+      const csv = [headers, ...linhas]
+        .map((row) => row.map((value) => `"${String(value ?? '').replaceAll('"', '""')}"`).join(';'))
+        .join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `pedidos-delicias-karen-${new Date().toISOString().slice(0, 10)}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    loginForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      loginAlert.classList.remove('show');
+      setSenha(adminPassword.value);
+      mostrarPainel();
+
+      try {
+        await carregarPedidos();
+      } catch (error) {
+        console.error(error);
+        loginAlert.textContent = 'Não foi possível acessar o painel. Verifique a senha e se o servidor está ligado.';
+        loginAlert.classList.add('show');
+        mostrarLogin();
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      limparSenha();
+      adminPassword.value = '';
+      mostrarLogin();
+    });
+
+    refreshBtn.addEventListener('click', () => carregarPedidos().catch((error) => window.alert(error.message)));
+    exportBtn.addEventListener('click', exportarCSV);
+    searchInput.addEventListener('input', renderizarPedidos);
+    statusFilter.addEventListener('change', renderizarPedidos);
+    clearFiltersBtn.addEventListener('click', () => {
+      searchInput.value = '';
+      statusFilter.value = 'todos';
+      renderizarPedidos();
+    });
+
+    ordersGrid.addEventListener('change', (event) => {
+      const select = event.target.closest('.statusSelect');
+      if (!select) return;
+
+      const card = event.target.closest('.order-card');
+      const id = Number(card.dataset.id);
+      atualizarStatus(id, select.value).catch((error) => window.alert(error.message));
+    });
+
+    ordersGrid.addEventListener('click', (event) => {
+      const button = event.target.closest('.deleteBtn');
+      if (!button) return;
+
+      const card = event.target.closest('.order-card');
+      const id = Number(card.dataset.id);
+      excluirPedido(id).catch((error) => window.alert(error.message));
+    });
+
+    if (getSenha()) {
+      mostrarPainel();
+      carregarPedidos().catch(() => mostrarLogin());
+    }
+  </script>
+</body>
+</html>
